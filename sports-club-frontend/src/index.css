@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: #e3f2fd;
+  --color-primary-100: #bbdefb;
+  --color-primary-200: #90caf9;
+  --color-primary-300: #64b5f6;
+  --color-primary-400: #42a5f5;
+  --color-primary-500: #2563eb; /* modern blue */
+  --color-primary-600: #1d4ed8;
+  --color-primary-700: #1e40af;
+  --color-primary-800: #1e3a8a;
+  --color-primary-900: #172554;
+
+  --color-secondary-50: #fdf6e3;
+  --color-secondary-100: #fcefc7;
+  --color-secondary-200: #fae29f;
+  --color-secondary-300: #f7d070;
+  --color-secondary-400: #e9b949;
+  --color-secondary-500: #f59e42; /* modern orange */
+  --color-secondary-600: #e67635;
+  --color-secondary-700: #c75100;
+  --color-secondary-800: #a44100;
+  --color-secondary-900: #7c2d12;
+
+  --color-accent-50: #f0fdfa;
+  --color-accent-100: #ccfbf1;
+  --color-accent-200: #99f6e4;
+  --color-accent-300: #5eead4;
+  --color-accent-400: #2dd4bf;
+  --color-accent-500: #14b8a6; /* teal accent */
+  --color-accent-600: #0d9488;
+  --color-accent-700: #0f766e;
+  --color-accent-800: #115e59;
+  --color-accent-900: #134e4a;
+
+  --color-dark-50: #f8fafc;
+  --color-dark-100: #f1f5f9;
+  --color-dark-200: #e2e8f0;
+  --color-dark-300: #cbd5e1;
+  --color-dark-400: #94a3b8;
+  --color-dark-500: #64748b;
+  --color-dark-600: #475569;
+  --color-dark-700: #334155;
+  --color-dark-800: #1e293b;
+  --color-dark-900: #0f172a;
+
+  --color-light-50: #f9fafb;
+  --color-light-100: #f3f4f6;
+  --color-light-200: #e5e7eb;
+  --color-light-300: #d1d5db;
+  --color-light-400: #9ca3af;
+  --color-light-500: #6b7280;
+  --color-light-600: #4b5563;
+  --color-light-700: #374151;
+  --color-light-800: #1f2937;
+  --color-light-900: #111827;
+
+  --font-family-sans: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  --font-size-h1: 2.5rem;
+  --font-size-h2: 2rem;
+  --font-size-h3: 1.5rem;
+  --font-size-body: 1rem;
+  --font-weight-bold: 700;
+  --font-weight-medium: 500;
+  --font-weight-regular: 400;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  color: var(--color-dark-900);
+  /* Soft gradient background with SVG sports pattern overlay (SVG on top) */
+  background:
+    url('data:image/svg+xml;utf8,<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="8" fill="%23A8DADC" fill-opacity="0.22"/><rect x="50" y="10" width="16" height="8" rx="4" fill="%23F59E42" fill-opacity="0.18"/><path d="M60 60 l10 0 l-5 8 z" fill="%232563eb" fill-opacity="0.18"/></svg>'),
+    linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-accent-50) 100%);
+  background-repeat: repeat;
+  background-size: 120px 120px, auto;
+}
+
+h1, .h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+}
+h2, .h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.01em;
+}
+h3, .h3 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+}
+p, .body {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-dark-800);
+}
+
+/* Custom styles that can't be handled by Tailwind */
+@layer components {
+  /* Custom button styles */
+  .btn-primary {
+    @apply bg-primary-500 text-white px-8 py-3 rounded-full font-bold shadow-md hover:bg-primary-600 hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary-500 text-white px-8 py-3 rounded-full font-bold shadow-md hover:bg-secondary-600 hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-400 focus:ring-offset-2;
+  }
+  
+  .btn-accent {
+    @apply bg-accent-500 text-dark-800 px-8 py-3 rounded-full font-bold shadow-md hover:bg-accent-600 hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2;
+  }
+  
+  /* Card styles */
+  .card {
+    @apply bg-white rounded-2xl shadow-lg p-8 border border-accent-100 hover:shadow-xl transition-shadow duration-200 mb-8;
+  }
+  
+  .card-primary {
+    @apply border-l-8 border-primary-500;
+  }
+  
+  .card-secondary {
+    @apply border-l-8 border-secondary-500;
+  }
+  
+  .card-accent {
+    @apply border-l-8 border-accent-500;
+  }
+  
+  /* Form styles */
+  .form-input {
+    @apply w-full px-5 py-3 border border-accent-200 rounded-full focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary-400 transition-all duration-200 shadow-sm text-base;
+  }
+  
+  .form-label {
+    @apply block text-base font-medium text-dark-700 mb-3;
+  }
+  
+  /* Login page specific styles */
+  .login-page {
+    @apply flex h-screen overflow-hidden;
+  }
+  
+  .carousel-section {
+    @apply flex-1 relative overflow-hidden;
+  }
+  
+  .carousel-img {
+    @apply w-full h-full object-cover absolute top-0 left-0;
+  }
+  
+  .carousel-overlay {
+    @apply absolute inset-0 bg-gradient-to-br from-dark-800/80 to-secondary-500/60 text-white flex items-center justify-center text-center z-10 p-8;
+  }
+  
+  .form-section {
+    @apply flex-1 bg-light-50 flex items-center justify-center p-8;
+  }
+  
+  .login-card {
+    @apply bg-white p-10 w-full max-w-md rounded-2xl shadow-xl border border-accent-100;
+  }
+}
+
+/* Custom animations */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out;
+}
