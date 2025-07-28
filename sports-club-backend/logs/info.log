@@ -562,3 +562,56 @@
 {"level":"INFO","timestamp":"2025-07-28T06:27:29.255Z","message":"HTTP Request","method":"POST","url":"/api/auth/login","status":200,"duration":"546ms","ip":"::ffff:127.0.0.1"}
 {"level":"INFO","timestamp":"2025-07-28T06:27:29.294Z","message":"HTTP Request","method":"GET","url":"/api/auth/profile","status":200,"duration":"23ms","ip":"::ffff:127.0.0.1","userId":"688718504d86c383b36961e7"}
 {"level":"INFO","timestamp":"2025-07-28T06:29:35.859Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:39.534Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:44.057Z","message":"Server running on port 5000","port":"5000","environment":"test"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:45.025Z","message":"User registered successfully","userId":"68871a40de1652050dee859a","email":"test@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:45.034Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"668ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:45.677Z","message":"User registered successfully","userId":"68871a41de1652050dee859f","email":"login@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:45.681Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"530ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:46.236Z","message":"User logged in successfully","userId":"68871a41de1652050dee859f","email":"login@example.com"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:46.240Z","message":"HTTP Request","method":"POST","url":"/api/auth/login","status":200,"duration":"544ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:46.810Z","message":"User registered successfully","userId":"68871a42de1652050dee85a4","email":"wrongpass@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:46.813Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"548ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:47.927Z","message":"User registered successfully","userId":"68871a43de1652050dee85a9","email":"profile@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:47.930Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"540ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:48.491Z","message":"User logged in successfully","userId":"68871a43de1652050dee85a9","email":"profile@example.com"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:48.496Z","message":"HTTP Request","method":"POST","url":"/api/auth/login","status":200,"duration":"551ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:35:48.540Z","message":"HTTP Request","method":"GET","url":"/api/auth/profile","status":200,"duration":"31ms","ip":"::ffff:127.0.0.1","userId":"68871a43de1652050dee85a9"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:05.360Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:10.103Z","message":"Server running on port 5000","port":"5000","environment":"test"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:11.068Z","message":"User registered successfully","userId":"68871a97f56ab944d4a364fc","email":"test@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:11.074Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"673ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:11.688Z","message":"User registered successfully","userId":"68871a97f56ab944d4a36500","email":"duplicate@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:11.693Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"542ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:12.256Z","message":"User registered successfully","userId":"68871a98f56ab944d4a36504","email":"login@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:12.260Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"537ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:12.819Z","message":"User logged in successfully","userId":"68871a98f56ab944d4a36504","email":"login@example.com"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:12.824Z","message":"HTTP Request","method":"POST","url":"/api/auth/login","status":200,"duration":"545ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:13.398Z","message":"User registered successfully","userId":"68871a99f56ab944d4a36509","email":"wrongpass@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:13.403Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"555ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:14.531Z","message":"User registered successfully","userId":"68871a9af56ab944d4a3650e","email":"profile@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:14.535Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"556ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:15.091Z","message":"User logged in successfully","userId":"68871a9af56ab944d4a3650e","email":"profile@example.com"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:15.095Z","message":"HTTP Request","method":"POST","url":"/api/auth/login","status":200,"duration":"544ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T06:37:15.134Z","message":"HTTP Request","method":"GET","url":"/api/auth/profile","status":200,"duration":"23ms","ip":"::ffff:127.0.0.1","userId":"68871a9af56ab944d4a3650e"}
+{"level":"INFO","timestamp":"2025-07-28T06:44:51.709Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T06:48:19.185Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T16:15:10.552Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T18:26:48.801Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:42.540Z","message":"Server running on port 5000","port":"5000","environment":"test"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:43.625Z","message":"User registered successfully","userId":"6887c1977e877aad2c0fb9a1","email":"test@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:43.637Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"764ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:44.223Z","message":"User registered successfully","userId":"6887c1987e877aad2c0fb9a5","email":"duplicate@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:44.228Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"546ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:44.855Z","message":"User registered successfully","userId":"6887c1987e877aad2c0fb9aa","email":"login@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:44.860Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"550ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:45.434Z","message":"User logged in successfully","userId":"6887c1987e877aad2c0fb9aa","email":"login@example.com"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:45.438Z","message":"HTTP Request","method":"POST","url":"/api/auth/login","status":200,"duration":"562ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:46.015Z","message":"User registered successfully","userId":"6887c19a7e877aad2c0fb9af","email":"wrongpass@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:46.019Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"555ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:47.155Z","message":"User registered successfully","userId":"6887c19b7e877aad2c0fb9b4","email":"profile@example.com","role":"member"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:47.160Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"555ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:47.719Z","message":"User logged in successfully","userId":"6887c19b7e877aad2c0fb9b4","email":"profile@example.com"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:47.723Z","message":"HTTP Request","method":"POST","url":"/api/auth/login","status":200,"duration":"548ms","ip":"::ffff:127.0.0.1"}
+{"level":"INFO","timestamp":"2025-07-28T18:29:47.761Z","message":"HTTP Request","method":"GET","url":"/api/auth/profile","status":200,"duration":"22ms","ip":"::ffff:127.0.0.1","userId":"6887c19b7e877aad2c0fb9b4"}
+{"level":"INFO","timestamp":"2025-07-28T18:30:26.373Z","message":"Server running on port 5000","port":"5000","environment":"development"}

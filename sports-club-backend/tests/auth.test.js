@@ -55,15 +55,15 @@ describe("Auth API", () => {
   it("should not register a user with an existing email", async () => {
     // Register the first user
     await request(app).post("/api/auth/register").send({
-      name: "testuser1", // Corrected to 'name'
+      name: "Test User One", // Corrected to meet name validation (no numbers)
       email: "duplicate@example.com",
-      password: "Password123!", // Updated to meet validation requirements
+      password: "Password123!",
       role: "member",
     });
 
     // Try to register with the same email
     const res = await request(app).post("/api/auth/register").send({
-      name: "testuser2", // Corrected to 'name'
+      name: "Test User Two",
       email: "duplicate@example.com",
       password: "Password456!", // Updated to meet validation requirements
       role: "member",
@@ -71,6 +71,7 @@ describe("Auth API", () => {
     expect(res.statusCode).toEqual(400); // Bad Request due to validation or duplicate
     // The error message for duplicate email comes from AppError in authController.js
     // Check both potential error message paths, as validation errors might return 'message' directly.
+    console.log("Response Body (Duplicate Email Test):", res.body); // Add debug log
     const errorMessage = res.body.error?.message || res.body.message;
     expect(errorMessage).toContain("Email already registered");
   });
