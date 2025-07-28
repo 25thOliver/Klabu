@@ -21,13 +21,23 @@ const register = asyncHandler(async (req, res) => {
   const saltRounds = parseInt(process.env.BCRYPT_ROUNDS) || 12;
   const hash = await bcrypt.hash(password, saltRounds);
 
-  // Create user
-  const user = await User.create({
+  // Set status and registrationFeePaid based on role
+  let userData = {
     name,
     email,
     passwordHash: hash,
     role: assignedRole,
-  });
+  };
+  if (assignedRole === 'admin') {
+    userData.status = 'active';
+    userData.registrationFeePaid = true;
+  } else {
+    userData.status = 'pending';
+    userData.registrationFeePaid = false;
+  }
+
+  // Create user
+  const user = await User.create(userData);
 
   logger.info('User registered successfully', { 
     userId: user._id, 
