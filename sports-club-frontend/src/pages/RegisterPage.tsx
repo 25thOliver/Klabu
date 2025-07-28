@@ -60,9 +60,9 @@ const RegisterPage = () => {
       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg border border-blue-200">
         <h1 className="text-2xl font-bold mb-4 text-center">Register for Club Membership</h1>
         <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded">
-          <p className="mb-1">To become a member, please fill in your details below.</p>
-          <p className="mb-1 font-semibold">Registration fee: <span className="text-green-700">KES 500</span></p>
-          <p className="text-sm text-blue-700">After registering, you will need to pay the fee and wait for admin approval before your membership is activated.</p>
+          <p className="mb-1 text-blue-900">To become a member, please fill in your details below.</p>
+          <p className="mb-1 font-semibold text-green-800">Registration fee: <span className="text-green-900">KES 500</span></p>
+          <p className="text-sm text-blue-900">After registering, you will need to pay the fee and wait for admin approval before your membership is activated.</p>
         </div>
         {error && <div className="text-red-500 mb-2">{error}</div>}
         {success ? (

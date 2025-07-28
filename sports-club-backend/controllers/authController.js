@@ -5,7 +5,7 @@ const { AppError, asyncHandler } = require('../middleware/errorHandler');
 const { logger } = require('../utils/logger');
 
 const register = asyncHandler(async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, role, dob, gender, phone, address, emergencyContact, sport } = req.body;
 
   // Check if user already exists
   const exists = await User.findOne({ email });
@@ -27,6 +27,12 @@ const register = asyncHandler(async (req, res) => {
     email,
     passwordHash: hash,
     role: assignedRole,
+    dob,
+    gender,
+    phone,
+    address,
+    emergencyContact,
+    sport,
   };
   if (assignedRole === 'admin') {
     userData.status = 'active';
