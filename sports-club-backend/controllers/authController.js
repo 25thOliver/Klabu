@@ -4,8 +4,10 @@ const jwt = require('jsonwebtoken');
 const { AppError, asyncHandler } = require('../middleware/errorHandler');
 const { logger } = require('../utils/logger');
 
+const Team = require('../models/Team');
+
 const register = asyncHandler(async (req, res) => {
-  const { name, email, password, role, dob, gender, phone, address, emergencyContact, sport } = req.body;
+  const { name, email, password, role, dob, gender, phone, address, emergencyContact, sport, team } = req.body;
 
   // Check if user already exists
   const exists = await User.findOne({ email });
@@ -44,6 +46,15 @@ const register = asyncHandler(async (req, res) => {
 
   // Create user
   const user = await User.create(userData);
+
+  // If a team is selected, add user to the team's members
+  if (team) {
+    const selectedTeam = await Team.findById(team);
+    if (selectedTeam && !selectedTeam.members.includes(user._id)) {
+      selectedTeam.members.push(user._id);
+      await selectedTeam.save();
+    }
+  }
 
   logger.info('User registered successfully', { 
     userId: user._id, 

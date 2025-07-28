@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
 
@@ -14,6 +14,11 @@ const sportsOptions = [
   'Other',
 ];
 
+interface Team {
+  _id: string;
+  name: string;
+}
+
 const RegisterPage = () => {
   const [form, setForm] = useState({
     name: '',
@@ -25,10 +30,23 @@ const RegisterPage = () => {
     address: '',
     emergencyContact: '',
     sport: '',
+    team: '',
   });
+  const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    // Fetch teams for dropdown
+    const fetchTeams = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/teams`);
+        setTeams(res.data);
+      } catch {}
+    };
+    fetchTeams();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -46,7 +64,7 @@ const RegisterPage = () => {
       });
       setSuccess(true);
       setForm({
-        name: '', email: '', password: '', dob: '', gender: '', phone: '', address: '', emergencyContact: '', sport: '',
+        name: '', email: '', password: '', dob: '', gender: '', phone: '', address: '', emergencyContact: '', sport: '', team: '',
       });
     } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed');
@@ -112,6 +130,15 @@ const RegisterPage = () => {
                 <option value="">Select</option>
                 {sportsOptions.map((sport) => (
                   <option key={sport} value={sport}>{sport}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block mb-1 font-bold text-blue-900">Team</label>
+              <select name="team" value={form.team} onChange={handleChange} required className={inputClass}>
+                <option value="">Select a team</option>
+                {teams.map((team) => (
+                  <option key={team._id} value={team._id}>{team.name}</option>
                 ))}
               </select>
             </div>

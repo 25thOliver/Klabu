@@ -9,6 +9,11 @@ router.get('/me', protect, getMe);
 router.get('/pending', protect, authorize('admin'), getPendingApplicants);
 router.post('/:id/approve', protect, authorize('admin'), approveApplicant);
 router.patch('/:id/status', protect, authorize('admin'), toggleStatus);
+const { updateUser, deleteUser } = require('../controllers/userController');
+
+router.patch('/:id', protect, authorize('admin'), updateUser);
+router.delete('/:id', protect, authorize('admin'), deleteUser);
+
 router.get('/:id', protect, async (req, res) => {
     try {
       const user = await User.findById(req.params.id).select('readAnnouncements');
