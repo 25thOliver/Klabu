@@ -55,10 +55,12 @@ const RegisterPage = () => {
     }
   };
 
+  const inputClass = "w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 bg-blue-50 text-blue-900 placeholder:text-blue-400";
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-green-100 py-8">
       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg border border-blue-200">
-        <h1 className="text-2xl font-bold mb-4 text-center">Register for Club Membership</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center text-blue-900">Register for Club Membership</h1>
         <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded">
           <p className="mb-1 text-blue-900">To become a member, please fill in your details below.</p>
           <p className="mb-1 font-semibold text-green-800">Registration fee: <span className="text-green-900">KES 500</span></p>
@@ -73,38 +75,18 @@ const RegisterPage = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex gap-4">
               <div className="flex-1">
-                <label className="block mb-1 font-medium">Full Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 bg-blue-50"
-                />
+                <label className="block mb-1 font-bold text-blue-900">Full Name</label>
+                <input type="text" name="name" value={form.name} onChange={handleChange} required className={inputClass} />
               </div>
               <div className="flex-1">
-                <label className="block mb-1 font-medium">Date of Birth</label>
-                <input
-                  type="date"
-                  name="dob"
-                  value={form.dob}
-                  onChange={handleChange}
-                  required
-                  className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 bg-blue-50"
-                />
+                <label className="block mb-1 font-bold text-blue-900">Date of Birth</label>
+                <input type="date" name="dob" value={form.dob} onChange={handleChange} required className={inputClass} />
               </div>
             </div>
             <div className="flex gap-4">
               <div className="flex-1">
-                <label className="block mb-1 font-medium">Gender</label>
-                <select
-                  name="gender"
-                  value={form.gender}
-                  onChange={handleChange}
-                  required
-                  className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 bg-blue-50"
-                >
+                <label className="block mb-1 font-bold text-blue-900">Gender</label>
+                <select name="gender" value={form.gender} onChange={handleChange} required className={inputClass}>
                   <option value="">Select</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -112,48 +94,21 @@ const RegisterPage = () => {
                 </select>
               </div>
               <div className="flex-1">
-                <label className="block mb-1 font-medium">Phone Number</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={form.phone}
-                  onChange={handleChange}
-                  required
-                  className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 bg-blue-50"
-                />
+                <label className="block mb-1 font-bold text-blue-900">Phone Number</label>
+                <input type="tel" name="phone" value={form.phone} onChange={handleChange} required className={inputClass} />
               </div>
             </div>
             <div>
-              <label className="block mb-1 font-medium">Address</label>
-              <input
-                type="text"
-                name="address"
-                value={form.address}
-                onChange={handleChange}
-                required
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 bg-blue-50"
-              />
+              <label className="block mb-1 font-bold text-blue-900">Address</label>
+              <input type="text" name="address" value={form.address} onChange={handleChange} required className={inputClass} />
             </div>
             <div>
-              <label className="block mb-1 font-medium">Emergency Contact</label>
-              <input
-                type="text"
-                name="emergencyContact"
-                value={form.emergencyContact}
-                onChange={handleChange}
-                required
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 bg-blue-50"
-              />
+              <label className="block mb-1 font-bold text-blue-900">Emergency Contact</label>
+              <input type="text" name="emergencyContact" value={form.emergencyContact} onChange={handleChange} required className={inputClass} />
             </div>
             <div>
-              <label className="block mb-1 font-medium">Preferred Sport/Position</label>
-              <select
-                name="sport"
-                value={form.sport}
-                onChange={handleChange}
-                required
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 bg-blue-50"
-              >
+              <label className="block mb-1 font-bold text-blue-900">Preferred Sport/Position</label>
+              <select name="sport" value={form.sport} onChange={handleChange} required className={inputClass}>
                 <option value="">Select</option>
                 {sportsOptions.map((sport) => (
                   <option key={sport} value={sport}>{sport}</option>
@@ -162,26 +117,12 @@ const RegisterPage = () => {
             </div>
             <div className="flex gap-4">
               <div className="flex-1">
-                <label className="block mb-1 font-medium">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 bg-blue-50"
-                />
+                <label className="block mb-1 font-bold text-blue-900">Email</label>
+                <input type="email" name="email" value={form.email} onChange={handleChange} required className={inputClass} />
               </div>
               <div className="flex-1">
-                <label className="block mb-1 font-medium">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={form.password}
-                  onChange={handleChange}
-                  required
-                  className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 bg-blue-50"
-                />
+                <label className="block mb-1 font-bold text-blue-900">Password</label>
+                <input type="password" name="password" value={form.password} onChange={handleChange} required className={inputClass} />
               </div>
             </div>
             <Button type="submit" disabled={loading} className="w-full mt-2">
