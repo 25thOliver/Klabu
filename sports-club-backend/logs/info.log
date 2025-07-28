@@ -637,3 +637,4 @@
 {"level":"INFO","timestamp":"2025-07-28T19:35:16.381Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"778ms","ip":"::1","userAgent":"curl/8.5.0"}
 {"level":"INFO","timestamp":"2025-07-28T19:35:50.949Z","message":"User logged in successfully","userId":"6887d0f40e9523a12d7ac8df","email":"adminoliver2@gmail.com"}
 {"level":"INFO","timestamp":"2025-07-28T19:35:50.951Z","message":"HTTP Request","method":"POST","url":"/api/auth/login","status":200,"duration":"573ms","ip":"::1","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"}
+{"level":"INFO","timestamp":"2025-07-28T19:43:47.884Z","message":"Server running on port 5000","port":"5000","environment":"development"}
