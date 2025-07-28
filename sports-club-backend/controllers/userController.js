@@ -37,4 +37,28 @@ const approveApplicant = async (req, res) => {
   res.json({ message: 'User approved', user: { id: user._id, email: user.email, status: user.status, role: user.role } });
 };
 
-module.exports = { getAllUsers, getMe, toggleStatus, getPendingApplicants, approveApplicant };
+// Admin: Update a user's details
+const updateUser = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  // Only allow updating certain fields
+  const fields = [
+    'name', 'email', 'dob', 'gender', 'phone', 'address', 'emergencyContact', 'sport',
+    'status', 'role', 'registrationFeePaid', 'membershipStatus'
+  ];
+  fields.forEach(field => {
+    if (req.body[field] !== undefined) user[field] = req.body[field];
+  });
+  await user.save();
+  res.json({ message: 'User updated', user });
+};
+
+// Admin: Delete a user
+const deleteUser = async (req, res) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+  if (!user) return res.status(404).json({ message: 'User not found' });
+  res.json({ message: 'User deleted' });
+};
+
+module.exports = { getAllUsers, getMe, toggleStatus, getPendingApplicants, approveApplicant, updateUser, deleteUser };
