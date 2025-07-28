@@ -15,6 +15,7 @@ interface Applicant {
 
 const AdminMembersPage = () => {
   const [pending, setPending] = useState<Applicant[]>([]);
+  const [members, setMembers] = useState<Applicant[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [approving, setApproving] = useState<string | null>(null);
@@ -35,8 +36,26 @@ const AdminMembersPage = () => {
     }
   };
 
+  const fetchMembers = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(`${API_URL}/users/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      // Filter for active members only
+      setMembers(res.data.filter((u: Applicant) => u.status === 'active' && u.role === 'member'));
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Failed to fetch members');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchPending();
+    fetchMembers();
     // eslint-disable-next-line
   }, []);
 
@@ -49,6 +68,8 @@ const AdminMembersPage = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPending((prev) => prev.filter((a) => a._id !== id));
+      // Refresh members list after approval
+      fetchMembers();
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to approve applicant');
     } finally {
@@ -65,7 +86,7 @@ const AdminMembersPage = () => {
       ) : pending.length === 0 ? (
         <div>No pending applicants.</div>
       ) : (
-        <table className="min-w-full border">
+        <table className="min-w-full border mb-8">
           <thead>
             <tr>
               <th className="border px-2 py-1">Name</th>
@@ -90,6 +111,33 @@ const AdminMembersPage = () => {
                     {approving === applicant._id ? 'Approving...' : 'Approve'}
                   </Button>
                 </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+      <h2 className="text-xl font-bold mb-2 mt-8">Registered Members</h2>
+      {loading ? (
+        <div>Loading...</div>
+      ) : members.length === 0 ? (
+        <div>No registered members found.</div>
+      ) : (
+        <table className="min-w-full border">
+          <thead>
+            <tr>
+              <th className="border px-2 py-1">Name</th>
+              <th className="border px-2 py-1">Email</th>
+              <th className="border px-2 py-1">Status</th>
+              <th className="border px-2 py-1">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {members.map((member) => (
+              <tr key={member._id}>
+                <td className="border px-2 py-1">{member.name}</td>
+                <td className="border px-2 py-1">{member.email}</td>
+                <td className="border px-2 py-1">{member.status}</td>
+                <td className="border px-2 py-1">{member.role}</td>
               </tr>
             ))}
           </tbody>
