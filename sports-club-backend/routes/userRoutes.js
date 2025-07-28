@@ -1,11 +1,13 @@
 const router = require('express').Router();
-const { getAllUsers, getMe, toggleStatus } = require('../controllers/userController');
+const { getAllUsers, getMe, toggleStatus, getPendingApplicants, approveApplicant } = require('../controllers/userController');
 const { protect } = require('../middleware/authMiddleware');
 const { authorize } = require('../middleware/roleMiddleware');
 const User = require('../models/User');
 
 router.get('/', protect, authorize('admin'), getAllUsers);
 router.get('/me', protect, getMe);
+router.get('/pending', protect, authorize('admin'), getPendingApplicants);
+router.post('/:id/approve', protect, authorize('admin'), approveApplicant);
 router.patch('/:id/status', protect, authorize('admin'), toggleStatus);
 router.get('/:id', protect, async (req, res) => {
     try {
