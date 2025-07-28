@@ -16,6 +16,10 @@ import TeamsPage from "./pages/TeamsPage";
 import ForumPage from "./pages/ForumPage";
 import PaymentsPage from "./pages/PaymentsPage";
 import ProfilePage from "./pages/ProfilePage";
+import AdminMembersPage from "./pages/AdminMembersPage";
+import AdminAnalyticsPage from "./pages/AdminAnalyticsPage";
+import AdminSettingsPage from "./pages/AdminSettingsPage";
+import NotificationsPage from "./pages/NotificationsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +43,20 @@ const App = () => (
                     <Route path="forum" element={<ForumPage />} />
                     <Route path="payments" element={<PaymentsPage />} />
                     <Route path="profile" element={<ProfilePage />} />
+                    <Route
+                      path="notifications"
+                      element={<NotificationsPage />}
+                    />
+                    <Route path="admin" element={<Layout />}>
+                      {" "}
+                      {/* Nested admin routes under a common /admin path, possibly with a separate AdminLayout later */}
+                      <Route path="members" element={<AdminMembersPage />} />
+                      <Route
+                        path="analytics"
+                        element={<AdminAnalyticsPage />}
+                      />
+                      <Route path="settings" element={<AdminSettingsPage />} />
+                    </Route>
                   </Route>
                   <Route path="*" element={<NotFound />} />
                 </Routes>
