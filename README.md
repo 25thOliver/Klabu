@@ -8,7 +8,7 @@ Klabu is a full-stack, modern sports club management platform designed to stream
 
 ```
 Klabu/
-├── sports-club-frontend/   # Modern React frontend (Vite, Tailwind CSS)
+├── sports-club-frontend/   # Modern React frontend (Vite, Tailwind CSS, Shadcn UI)
 └── sports-club-backend/    # Node.js/Express backend API (MongoDB)
 ```
 
@@ -32,8 +32,10 @@ Klabu/
 ## 🧩 Architecture Overview
 
 ### Frontend (sports-club-frontend)
-- **React** (Vite) with Context API for state management
+- **React** (Vite) with `@tanstack/react-query` for data fetching and state management
 - **Tailwind CSS** for modern, responsive design
+- **Shadcn UI** for accessible and customizable UI components
+- **React Router DOM** for navigation
 - **Axios** for API communication
 - **Role-based routing** and protected pages
 - **Global notification, loading, and theme contexts**
@@ -73,14 +75,14 @@ cd ../sports-club-frontend
 npm install
 cp .env.example .env.local
 # Edit .env.local with your backend API URL (default: http://localhost:5000/api)
-npm run dev     # Start frontend (default: http://localhost:3000)
+npm run dev     # Start frontend (default: http://localhost:5173 or similar Vite default)
 ```
 
 ---
 
 ## 🔗 How It Works Together
 - The **frontend** communicates with the **backend** via RESTful API endpoints (see backend/README.md for full API docs).
-- Authentication is managed with JWT tokens stored in the frontend and validated by the backend.
+- Authentication is managed with JWT tokens stored securely in the frontend and validated by the backend.
 - All core features (events, bookings, payments, forum, teams) are accessible via the web UI and powered by backend APIs.
 - Real-time feedback, notifications, and loading states provide a smooth user experience.
 
@@ -116,4 +118,4 @@ This project is licensed under the ISC License.
 
 ## 🆘 Support
 - For issues, open a GitHub issue or contact the maintainers
-- See the frontend and backend READMEs for troubleshooting tips 
+- See the frontend and backend READMEs for troubleshooting tips
