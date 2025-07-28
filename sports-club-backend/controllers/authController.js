@@ -53,17 +53,20 @@ const login = asyncHandler(async (req, res) => {
   // Find user by email
   const user = await User.findOne({ email });
   if (!user) {
+    logger.error('Login failed: user not found', { email });
     throw new AppError('Invalid credentials', 401);
   }
 
   // Check if user is active
   if (user.status !== 'active') {
+    logger.error('Login failed: user not active', { email, status: user.status });
     throw new AppError('Account is deactivated', 401);
   }
 
   // Compare password hashes
   const isMatch = await bcrypt.compare(password, user.passwordHash);
   if (!isMatch) {
+    logger.error('Login failed: password mismatch', { email });
     throw new AppError('Invalid credentials', 401);
   }
 

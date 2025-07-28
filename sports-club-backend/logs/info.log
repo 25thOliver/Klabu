@@ -615,3 +615,25 @@
 {"level":"INFO","timestamp":"2025-07-28T18:29:47.723Z","message":"HTTP Request","method":"POST","url":"/api/auth/login","status":200,"duration":"548ms","ip":"::ffff:127.0.0.1"}
 {"level":"INFO","timestamp":"2025-07-28T18:29:47.761Z","message":"HTTP Request","method":"GET","url":"/api/auth/profile","status":200,"duration":"22ms","ip":"::ffff:127.0.0.1","userId":"6887c19b7e877aad2c0fb9b4"}
 {"level":"INFO","timestamp":"2025-07-28T18:30:26.373Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T18:52:25.476Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T18:56:04.955Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:04:06.940Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:13:19.382Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:15:16.885Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:15:57.182Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:17:24.115Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:17:33.175Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:19:02.216Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:19:09.784Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:20:28.062Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:20:34.545Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:21:39.707Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:22:10.041Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:23:25.895Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:23:42.127Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:28:22.990Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:34:40.842Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:35:16.380Z","message":"User registered successfully","userId":"6887d0f40e9523a12d7ac8df","email":"adminoliver2@gmail.com","role":"admin"}
+{"level":"INFO","timestamp":"2025-07-28T19:35:16.381Z","message":"HTTP Request","method":"POST","url":"/api/auth/register","status":201,"duration":"778ms","ip":"::1","userAgent":"curl/8.5.0"}
+{"level":"INFO","timestamp":"2025-07-28T19:35:50.949Z","message":"User logged in successfully","userId":"6887d0f40e9523a12d7ac8df","email":"adminoliver2@gmail.com"}
+{"level":"INFO","timestamp":"2025-07-28T19:35:50.951Z","message":"HTTP Request","method":"POST","url":"/api/auth/login","status":200,"duration":"573ms","ip":"::1","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"}

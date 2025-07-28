@@ -1,12 +1,21 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import axios from "axios";
+
+const API_URL = import.meta.env.VITE_APP_API_URL || "http://localhost:5000/api";
 
 export interface User {
   id: string;
   email: string;
   firstName: string;
   lastName: string;
-  role: 'admin' | 'member';
-  membershipStatus: 'active' | 'inactive' | 'pending';
+  role: "admin" | "member";
+  membershipStatus: "active" | "inactive" | "pending";
   profilePicture?: string;
   phone?: string;
   dateJoined: string;
@@ -36,7 +45,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
@@ -56,27 +65,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Check for existing token and validate user session
     const initializeAuth = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (token) {
-          // TODO: Validate token with backend and get user data
-          // For now, we'll simulate this
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          
-          // Mock user data - replace with actual API call
-          const mockUser: User = {
-            id: '1',
-            email: 'demo@sportsclub.com',
-            firstName: 'Demo',
-            lastName: 'User',
-            role: 'member',
-            membershipStatus: 'active',
-            dateJoined: '2024-01-01'
-          };
-          setUser(mockUser);
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+          const response = await axios.get(`${API_URL}/auth/profile`);
+          const userData = response.data.data;
+
+          // Assuming backend returns firstName and lastName
+          setUser({
+            id: userData.id,
+            email: userData.email,
+            firstName: userData.name.split(" ")[0], // Assuming 'name' can be split to get firstName
+            lastName: userData.name.split(" ").slice(1).join(" ") || "", // Assuming 'name' can be split to get lastName
+            role: userData.role,
+            membershipStatus: userData.membershipStatus || "inactive",
+            dateJoined:
+              userData.createdAt || new Date().toISOString().split("T")[0], // Use createdAt if available
+          });
         }
       } catch (err) {
-        console.error('Auth initialization failed:', err);
-        localStorage.removeItem('token');
+        console.error("Auth initialization failed:", err);
+        localStorage.removeItem("token");
+        delete axios.defaults.headers.common["Authorization"];
       } finally {
         setIsLoading(false);
       }
@@ -88,29 +98,33 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
-      // TODO: Replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Mock login response
-      const mockUser: User = {
-        id: '1',
+      const response = await axios.post(`${API_URL}/auth/login`, {
         email,
-        firstName: email.split('@')[0],
-        lastName: 'User',
-        role: email.includes('admin') ? 'admin' : 'member',
-        membershipStatus: 'active',
-        dateJoined: '2024-01-01'
-      };
-      
-      const mockToken = 'mock-jwt-token';
-      
-      localStorage.setItem('token', mockToken);
-      setUser(mockUser);
-    } catch (err) {
-      setError('Login failed. Please check your credentials.');
-      throw err;
+        password,
+      });
+      const { token, user: userData } = response.data.data;
+
+      localStorage.setItem("token", token);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      setUser({
+        id: userData.id,
+        email: userData.email,
+        firstName: userData.name.split(" ")[0],
+        lastName: userData.name.split(" ").slice(1).join(" ") || "",
+        role: userData.role,
+        membershipStatus: userData.membershipStatus || "inactive",
+        dateJoined:
+          userData.createdAt || new Date().toISOString().split("T")[0],
+      });
+    } catch (err: any) {
+      const errorMessage =
+        err.response?.data?.error?.message ||
+        "Login failed. Please check your credentials.";
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -119,56 +133,74 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const register = async (userData: RegisterData) => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
-      // TODO: Replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Mock registration response
-      const newUser: User = {
-        id: Date.now().toString(),
+      const response = await axios.post(`${API_URL}/auth/register`, {
+        name: `${userData.firstName} ${userData.lastName}`, // Combine firstName and lastName for 'name' field
         email: userData.email,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        role: 'member',
-        membershipStatus: 'pending',
-        phone: userData.phone,
-        dateJoined: new Date().toISOString().split('T')[0]
-      };
-      
-      const mockToken = 'mock-jwt-token';
-      
-      localStorage.setItem('token', mockToken);
-      setUser(newUser);
-    } catch (err) {
-      setError('Registration failed. Please try again.');
-      throw err;
+        password: userData.password,
+        role: "member", // Default to member role
+      });
+
+      // After successful registration, automatically log in the user
+      // or redirect to login. For simplicity, we'll try to log in immediately.
+      await login(userData.email, userData.password); // Reuse login function
+
+      // Alternatively, you could just show a success message and not auto-login:
+      // setUser(null); // No user directly set on register unless auto-logged in
+      // localStorage.removeItem('token');
+    } catch (err: any) {
+      const errorMessage =
+        err.response?.data?.error?.message ||
+        "Registration failed. Please try again.";
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
+    delete axios.defaults.headers.common["Authorization"]; // Clear token from axios headers
     setUser(null);
     setError(null);
   };
 
   const updateProfile = async (userData: Partial<User>) => {
     if (!user) return;
-    
+
     setIsLoading(true);
     setError(null);
-    
+
     try {
-      // TODO: Replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const updatedUser = { ...user, ...userData };
-      setUser(updatedUser);
-    } catch (err) {
-      setError('Profile update failed. Please try again.');
-      throw err;
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No authentication token found for profile update.");
+      }
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      const response = await axios.put(`${API_URL}/auth/profile`, userData);
+      const updatedUser = response.data.data;
+
+      setUser({
+        id: updatedUser.id,
+        email: updatedUser.email,
+        firstName: updatedUser.name.split(" ")[0],
+        lastName: updatedUser.name.split(" ").slice(1).join(" ") || "",
+        role: updatedUser.role,
+        membershipStatus: updatedUser.membershipStatus || "inactive",
+        profilePicture: updatedUser.profilePicture,
+        phone: updatedUser.phone,
+        dateJoined:
+          updatedUser.createdAt || new Date().toISOString().split("T")[0],
+      });
+    } catch (err: any) {
+      const errorMessage =
+        err.response?.data?.error?.message ||
+        "Profile update failed. Please try again.";
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -182,12 +214,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     logout,
     updateProfile,
     isLoading,
-    error
+    error,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
