@@ -641,3 +641,4 @@
 {"level":"INFO","timestamp":"2025-07-28T19:46:22.943Z","message":"Server running on port 5000","port":"5000","environment":"development"}
 {"level":"INFO","timestamp":"2025-07-28T19:48:02.524Z","message":"Server running on port 5000","port":"5000","environment":"development"}
 {"level":"INFO","timestamp":"2025-07-28T19:50:10.338Z","message":"Server running on port 5000","port":"5000","environment":"development"}
+{"level":"INFO","timestamp":"2025-07-28T19:52:55.119Z","message":"HTTP Request","method":"GET","url":"/api/users/pending","status":200,"duration":"54ms","ip":"::1","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36","userId":"6887d0f40e9523a12d7ac8df"}
