@@ -22,6 +22,7 @@ const AdminMembersPage = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<Applicant>>({});
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
 
   const fetchPending = async () => {
     setLoading(true);
@@ -137,6 +138,13 @@ const AdminMembersPage = () => {
     }
   };
 
+  // Filter members by search
+  const filteredMembers = members.filter(
+    (m) =>
+      m.name.toLowerCase().includes(search.toLowerCase()) ||
+      m.email.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Pending Membership Approvals</h1>
@@ -177,9 +185,16 @@ const AdminMembersPage = () => {
         </table>
       )}
       <h2 className="text-xl font-bold mb-2 mt-8">Registered Members</h2>
+      <input
+        type="text"
+        placeholder="Search by name or email..."
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        className="border px-3 py-2 rounded mb-4 w-full max-w-xs"
+      />
       {loading ? (
         <div>Loading...</div>
-      ) : members.length === 0 ? (
+      ) : filteredMembers.length === 0 ? (
         <div>No registered members found.</div>
       ) : (
         <table className="min-w-full border">
@@ -193,7 +208,7 @@ const AdminMembersPage = () => {
             </tr>
           </thead>
           <tbody>
-            {members.map((member) => (
+            {filteredMembers.map((member) => (
               <tr key={member._id}>
                 {editingId === member._id ? (
                   <>

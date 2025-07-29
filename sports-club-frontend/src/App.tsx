@@ -43,20 +43,11 @@ const App = () => (
                     <Route path="forum" element={<ForumPage />} />
                     <Route path="payments" element={<PaymentsPage />} />
                     <Route path="profile" element={<ProfilePage />} />
-                    <Route
-                      path="notifications"
-                      element={<NotificationsPage />}
-                    />
-                    <Route path="admin" element={<Layout />}>
-                      {" "}
-                      {/* Nested admin routes under a common /admin path, possibly with a separate AdminLayout later */}
-                      <Route path="members" element={<AdminMembersPage />} />
-                      <Route
-                        path="analytics"
-                        element={<AdminAnalyticsPage />}
-                      />
-                      <Route path="settings" element={<AdminSettingsPage />} />
-                    </Route>
+                    <Route path="notifications" element={<NotificationsPage />} />
+                    {/* Admin pages directly under Layout */}
+                    <Route path="admin/members" element={<AdminMembersPage />} />
+                    <Route path="admin/analytics" element={<AdminAnalyticsPage />} />
+                    <Route path="admin/settings" element={<AdminSettingsPage />} />
                   </Route>
                   <Route path="*" element={<NotFound />} />
                 </Routes>

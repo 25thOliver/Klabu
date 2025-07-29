@@ -37,15 +37,7 @@ export const Layout: React.FC = () => {
             <div className="flex h-16 items-center gap-4 px-6">
               <SidebarTrigger className="h-9 w-9" />
               
-              <div className="flex-1 flex items-center gap-4 max-w-md">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search events, facilities, members..."
-                    className="pl-10 bg-muted/50 border-0 focus-visible:ring-1"
-                  />
-                </div>
-              </div>
+              {/* Search filter removed from header to avoid redundancy */}
 
               <div className="flex items-center gap-2">
                 <Button variant="ghost" size="icon" className="relative">
