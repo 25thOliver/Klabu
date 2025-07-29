@@ -1,12 +1,36 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, MapPin, Users, CreditCard, Trophy, Activity } from 'lucide-react';
+
+const quickActions = [
+  { label: 'Book Facility', to: '/facilities' },
+  { label: 'Register for Event', to: '/events' },
+  { label: 'Make Payment', to: '/payments' },
+  { label: 'View Notifications', to: '/notifications' },
+  { label: 'Settings', to: '/admin/settings' },
+];
 
 const Index = () => {
   const { user, isAuthenticated } = useAuth();
+  const [showActions, setShowActions] = useState(false);
+  const actionsRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (actionsRef.current && !actionsRef.current.contains(event.target)) {
+        setShowActions(false);
+      }
+    };
+    if (showActions) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showActions]);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
@@ -16,7 +40,7 @@ const Index = () => {
     { title: 'Upcoming Events', value: '12', icon: Calendar, color: 'text-primary' },
     { title: 'Active Bookings', value: '8', icon: MapPin, color: 'text-secondary' },
     { title: 'Team Members', value: '156', icon: Users, color: 'text-accent' },
-    { title: 'Monthly Revenue', value: '$12,340', icon: CreditCard, color: 'text-green-600' },
+    { title: 'Monthly Revenue', value: 'KES 12,340', icon: CreditCard, color: 'text-green-600' },
   ];
 
   return (
@@ -30,9 +54,25 @@ const Index = () => {
             Here's what's happening at your sports club today.
           </p>
         </div>
-        <Button variant="athletic" size="lg">
-          Quick Actions
-        </Button>
+        <div className="relative" ref={actionsRef}>
+          <Button variant="athletic" size="lg" onClick={() => setShowActions((v) => !v)}>
+            Quick Actions
+          </Button>
+          {showActions && (
+            <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
+              {quickActions.map((action) => (
+                <Link
+                  key={action.label}
+                  to={action.to}
+                  className="block px-4 py-2 hover:bg-gray-100 text-gray-800"
+                  onClick={() => setShowActions(false)}
+                >
+                  {action.label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -95,8 +135,12 @@ const Index = () => {
                 }
               </p>
               <div className="flex justify-center gap-2">
-                <Button variant="sport" size="sm">View Profile</Button>
-                <Button variant="outline" size="sm">Settings</Button>
+                <Link to="/profile">
+                  <Button variant="sport" size="sm">View Profile</Button>
+                </Link>
+                <Link to="/admin/settings">
+                  <Button variant="outline" size="sm">Settings</Button>
+                </Link>
               </div>
             </div>
           </CardContent>
