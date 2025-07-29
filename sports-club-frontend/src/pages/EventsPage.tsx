@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-
-// Mock user role (in a real app, get this from auth context)
-const mockUser = {
-  id: 2,
-  name: 'John Doe',
-  role: 'member', // Change to 'admin' to test admin UI
-};
+import { useAuth } from '@/context/AuthContext';
 
 // Mock events data
 const initialEvents = [
@@ -33,6 +27,7 @@ const initialEvents = [
 ];
 
 const EventsPage = () => {
+  const { user } = useAuth();
   const [events, setEvents] = useState(initialEvents);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showEventModal, setShowEventModal] = useState(false);
@@ -72,7 +67,7 @@ const EventsPage = () => {
   return (
     <div className="p-4 max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Events</h1>
-      {mockUser.role === 'admin' && (
+      {user?.role === 'admin' && (
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
           onClick={() => setShowAddEventModal(true)}
