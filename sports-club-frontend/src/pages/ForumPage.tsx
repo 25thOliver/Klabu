@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import Picker from '@emoji-mart/react';
 
 // Mock user (in a real app, get this from auth context)
 const mockUser = {
@@ -29,33 +30,7 @@ const initialThreads = [
   },
 ];
 
-// Mock stickers and GIFs
-const stickers = [
-  'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f44d.png', // thumbs up
-  'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f389.png', // party popper
-  'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f60d.png', // heart eyes
-];
-const gifs = [
-  'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif',
-  'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif',
-  'https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif',
-];
-const emojis = ['😀', '😂', '🎾', '⚽', '🏀', '👍', '🎉', '😍', '🔥', '🙌'];
-
-function insertAtCursor(value, insert) {
-  // Helper for textarea insertion
-  if (!value.ref || !value.ref.current) return;
-  const textarea = value.ref.current;
-  const start = textarea.selectionStart;
-  const end = textarea.selectionEnd;
-  const text = value.state;
-  const newText = text.slice(0, start) + insert + text.slice(end);
-  value.setState(newText);
-  setTimeout(() => {
-    textarea.focus();
-    textarea.selectionStart = textarea.selectionEnd = start + insert.length;
-  }, 0);
-}
+const GIPHY_API_KEY = '7oRgyuHNPBYWiZ7SsNGXfuy3wi2yrB6J';
 
 const ForumPage = () => {
   const [threads, setThreads] = useState(initialThreads);
@@ -63,11 +38,14 @@ const ForumPage = () => {
   const [showNewThreadModal, setShowNewThreadModal] = useState(false);
   const [newThread, setNewThread] = useState({ title: '', content: '' });
   const [replyContent, setReplyContent] = useState('');
-  const replyRef = React.useRef();
-  const newThreadRef = React.useRef();
+  const replyRef = useRef();
+  const newThreadRef = useRef();
   const [showEmojiPicker, setShowEmojiPicker] = useState(''); // '' | 'reply' | 'thread'
   const [showStickerPicker, setShowStickerPicker] = useState('');
   const [showGifPicker, setShowGifPicker] = useState('');
+  const [giphyResults, setGiphyResults] = useState([]);
+  const [giphyQuery, setGiphyQuery] = useState('');
+  const [giphyLoading, setGiphyLoading] = useState(false);
 
   // Create new thread
   const handleCreateThread = (e) => {
@@ -130,6 +108,9 @@ const ForumPage = () => {
       setShowStickerPicker('');
       setShowGifPicker('');
     }
+    setGiphyResults([]);
+    setGiphyQuery('');
+    setGiphyLoading(false);
   };
 
   // Render post content (emojis as text, stickers/gifs as images if URL)
@@ -143,6 +124,21 @@ const ForumPage = () => {
       }
       return <span key={i}>{part}</span>;
     });
+  };
+
+  // Giphy search (GIF or sticker)
+  const handleGiphySearch = async (type, query) => {
+    setGiphyLoading(true);
+    setGiphyResults([]);
+    setGiphyQuery(query);
+    let endpoint =
+      type === 'gif'
+        ? `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${encodeURIComponent(query)}&limit=18&rating=pg`
+        : `https://api.giphy.com/v1/stickers/search?api_key=${GIPHY_API_KEY}&q=${encodeURIComponent(query)}&limit=18&rating=pg`;
+    const res = await fetch(endpoint);
+    const data = await res.json();
+    setGiphyResults(data.data.map((item) => item.images.fixed_height.url));
+    setGiphyLoading(false);
   };
 
   return (
@@ -258,52 +254,74 @@ const ForumPage = () => {
         </div>
       )}
 
-      {/* Emoji Picker */}
+      {/* Emoji Picker (emoji-mart) */}
       {showEmojiPicker && (
         <div className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded shadow flex flex-wrap gap-2 max-w-xs">
-            {emojis.map((emoji, i) => (
-              <button
-                key={i}
-                className="text-2xl"
-                onClick={() => handleInsert('emoji', emoji, showEmojiPicker)}
-              >
-                {emoji}
-              </button>
-            ))}
-            <button className="ml-auto text-sm text-gray-500" onClick={() => setShowEmojiPicker('')}>Close</button>
+          <div className="bg-white p-4 rounded shadow">
+            <Picker
+              onEmojiSelect={emoji => handleInsert('emoji', emoji.native, showEmojiPicker)}
+              title="Pick your emoji"
+              emoji="point_up"
+              previewPosition="none"
+              skinTonePosition="none"
+            />
+            <button className="mt-2 text-sm text-gray-500" onClick={() => setShowEmojiPicker('')}>Close</button>
           </div>
         </div>
       )}
-      {/* Sticker Picker */}
+      {/* Sticker Picker (Giphy) */}
       {showStickerPicker && (
         <div className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded shadow flex flex-wrap gap-2 max-w-xs">
-            {stickers.map((url, i) => (
-              <button
-                key={i}
-                onClick={() => handleInsert('sticker', url + ' ', showStickerPicker)}
-              >
-                <img src={url} alt="sticker" className="h-10 w-10" />
-              </button>
-            ))}
-            <button className="ml-auto text-sm text-gray-500" onClick={() => setShowStickerPicker('')}>Close</button>
+          <div className="bg-white p-4 rounded shadow max-w-xs w-full">
+            <div className="mb-2 font-semibold">Search Stickers</div>
+            <input
+              className="border p-2 w-full rounded mb-2"
+              type="text"
+              placeholder="Search stickers..."
+              value={giphyQuery}
+              onChange={e => handleGiphySearch('sticker', e.target.value)}
+              autoFocus
+            />
+            {giphyLoading && <div>Loading...</div>}
+            <div className="flex flex-wrap gap-2 max-h-60 overflow-y-auto">
+              {giphyResults.map((url, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleInsert('sticker', url + ' ', showStickerPicker)}
+                >
+                  <img src={url} alt="sticker" className="h-14 w-14" />
+                </button>
+              ))}
+            </div>
+            <button className="mt-2 text-sm text-gray-500" onClick={() => { setShowStickerPicker(''); setGiphyResults([]); setGiphyQuery(''); }}>Close</button>
           </div>
         </div>
       )}
-      {/* GIF Picker */}
+      {/* GIF Picker (Giphy) */}
       {showGifPicker && (
         <div className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded shadow flex flex-wrap gap-2 max-w-xs">
-            {gifs.map((url, i) => (
-              <button
-                key={i}
-                onClick={() => handleInsert('gif', url + ' ', showGifPicker)}
-              >
-                <img src={url} alt="gif" className="h-14 w-14" />
-              </button>
-            ))}
-            <button className="ml-auto text-sm text-gray-500" onClick={() => setShowGifPicker('')}>Close</button>
+          <div className="bg-white p-4 rounded shadow max-w-xs w-full">
+            <div className="mb-2 font-semibold">Search GIFs</div>
+            <input
+              className="border p-2 w-full rounded mb-2"
+              type="text"
+              placeholder="Search GIFs..."
+              value={giphyQuery}
+              onChange={e => handleGiphySearch('gif', e.target.value)}
+              autoFocus
+            />
+            {giphyLoading && <div>Loading...</div>}
+            <div className="flex flex-wrap gap-2 max-h-60 overflow-y-auto">
+              {giphyResults.map((url, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleInsert('gif', url + ' ', showGifPicker)}
+                >
+                  <img src={url} alt="gif" className="h-20 w-20" />
+                </button>
+              ))}
+            </div>
+            <button className="mt-2 text-sm text-gray-500" onClick={() => { setShowGifPicker(''); setGiphyResults([]); setGiphyQuery(''); }}>Close</button>
           </div>
         </div>
       )}
