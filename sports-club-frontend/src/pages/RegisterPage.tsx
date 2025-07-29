@@ -30,23 +30,12 @@ const RegisterPage = () => {
     address: '',
     emergencyContact: '',
     sport: '',
-    team: '',
   });
-  const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    // Fetch teams for dropdown
-    const fetchTeams = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/teams`);
-        setTeams(res.data);
-      } catch {}
-    };
-    fetchTeams();
-  }, []);
+  // Removed team fetching logic
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -64,7 +53,7 @@ const RegisterPage = () => {
       });
       setSuccess(true);
       setForm({
-        name: '', email: '', password: '', dob: '', gender: '', phone: '', address: '', emergencyContact: '', sport: '', team: '',
+        name: '', email: '', password: '', dob: '', gender: '', phone: '', address: '', emergencyContact: '', sport: '',
       });
     } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed');
@@ -133,15 +122,7 @@ const RegisterPage = () => {
                 ))}
               </select>
             </div>
-            <div>
-              <label className="block mb-1 font-bold text-blue-900">Team</label>
-              <select name="team" value={form.team} onChange={handleChange} required className={inputClass}>
-                <option value="">Select a team</option>
-                {teams.map((team) => (
-                  <option key={team._id} value={team._id}>{team.name}</option>
-                ))}
-              </select>
-            </div>
+            {/* Team selection removed from registration form */}
             <div className="flex gap-4">
               <div className="flex-1">
                 <label className="block mb-1 font-bold text-blue-900">Email</label>
