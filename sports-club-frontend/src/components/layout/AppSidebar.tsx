@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   Home,
   Calendar,
@@ -55,6 +55,7 @@ export function AppSidebar() {
   const { state } = useSidebar();
   const { user, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPath = location.pathname;
   const collapsed = state === 'collapsed';
 
@@ -74,6 +75,11 @@ export function AppSidebar() {
     );
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+  };
+
   return (
     <Sidebar
       className={cn(
@@ -84,13 +90,11 @@ export function AppSidebar() {
     >
       <SidebarHeader className="border-b border-sidebar-border p-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-athletic">
-            <Trophy className="h-6 w-6 text-white" />
-          </div>
+          
           {!collapsed && (
             <div>
               <h2 className="text-lg font-bold text-sidebar-foreground">Sports Club</h2>
-              <p className="text-sm text-sidebar-foreground/70">Management System</p>
+              <p className="text-sm text-sidebar-foreground/70">Portal</p>
             </div>
           )}
         </div>
@@ -193,7 +197,7 @@ export function AppSidebar() {
             <Button
               variant="outline"
               size={collapsed ? 'icon' : 'sm'}
-              onClick={logout}
+              onClick={handleLogout}
               className="w-full border-sidebar-border hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
             >
               {collapsed ? (
